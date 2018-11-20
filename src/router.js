@@ -2,6 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 
+import {
+  ROUTE_HOME,
+  ROUTE_POSTERS,
+  ROUTE_SHOW_POSTER,
+  ROUTE_ADD_POSTER
+} from '@/const'
+
 Vue.use(Router)
 
 export default new Router({
@@ -10,17 +17,26 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: ROUTE_HOME,
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      path: '/posters',
+      name: ROUTE_POSTERS,
       component: () =>
-        import(/* webpackChunkName: "about" */ './views/About.vue')
+        import(/* webpackChunkName: "posters" */ './views/Posters.vue')
+    },
+    {
+      path: '/posters/add',
+      name: ROUTE_ADD_POSTER,
+      component: () =>
+        import(/* webpackChunkName: "posters" */ './views/AddPoster.vue')
+    },
+    {
+      path: '/posters/:id',
+      name: ROUTE_SHOW_POSTER,
+      component: () =>
+        import(/* webpackChunkName: "posters" */ './views/ShowPoster.vue')
     }
   ]
 })

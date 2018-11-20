@@ -4,11 +4,10 @@
     .hero-head
       site-nav
     .hero-body
-      centered-box(v-if="user")
-        .box.has-text-centered
-          h2.title.is-5.has-text-dark Welcome back!
-          .buttons.is-centered
-            router-link.button.is-link.is-medium(to="/posters") My posters →
+      centered-box.has-text-centered(v-if="user")
+        h2.title.is-5.has-text-dark Welcome back!
+        .buttons.is-centered
+          router-link.button.is-link.is-medium(to="/posters") My posters →
       centered-box(v-else-if="state === 'checking'")
         .control.is-loading
           p.is-size-4.has-text-grey-light Checking login
@@ -73,22 +72,24 @@
 
 <script>
 import { sharedClient } from '@/services/ApiService'
+import { MUTATION_CURRENT_USER } from '@/const'
 import { isEmail } from '@/utils'
 import SiteNav from '@/components/SiteNav'
 import CenteredBox from '@/components/CenteredBox'
 
 export default {
-  name: 'home',
   components: {
     SiteNav,
     CenteredBox
   },
   data: () => ({
     state: 'checking',
-    email: '',
-    user: null
+    email: ''
   }),
   computed: {
+    user() {
+      return this.$store.state.currentUser
+    },
     canSubmit() {
       return isEmail(this.email) && this.state === 'input'
     }
@@ -100,7 +101,7 @@ export default {
     async checkLogin() {
       let { data } = await sharedClient.get('users')
       if (data) {
-        this.$router.replace('/posters')
+        this.$store.commit(MUTATION_CURRENT_USER, data)
       } else {
         this.state = 'input'
       }
