@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export class ApiService {
-  constructor(baseURL = '/api') {
+  constructor(baseURL = '/') {
     this.client = axios.create({
       baseURL,
       withCredentials: true
@@ -53,4 +53,4 @@ export class ApiService {
   }
 }
 
-export const sharedClient = new ApiService('http://localhost:3000/api')
+export const sharedClient = new ApiService('http://localhost:3000')
