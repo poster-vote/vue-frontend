@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "prettier": "prettier --write ./**/*.{js,vue,json,sass,css,md}"
+    "prettier": "prettier --write */**/*.{js,vue,json,css,md}"
   },
   "husky": {
     "hooks": {
@@ -14,12 +14,13 @@
     }
   },
   "lint-staged": {
-    "*.{js,vue,json,sass,css,md}": [
+    "*.{js,vue,json,css,md}": [
       "prettier --write",
       "git add"
     ]
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bulma": "^0.7.2",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
@@ -39,6 +40,8 @@
     "lint-staged": "^8.0.5",
     "node-sass": "^4.9.0",
     "prettier": "^1.15.2",
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   }
