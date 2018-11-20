@@ -42,7 +42,13 @@
 <script>
 import { sharedClient } from '@/services/ApiService'
 import SiteNav from '@/components/SiteNav'
-import { MUTATION_POSTERS, ROUTE_SHOW_POSTER, ROUTE_ADD_POSTER } from '@/const'
+import {
+  MUTATION_POSTERS,
+  MUTATION_CURRENT_USER,
+  ROUTE_SHOW_POSTER,
+  ROUTE_ADD_POSTER,
+  ROUTE_HOME
+} from '@/const'
 
 export default {
   components: { SiteNav },
@@ -58,7 +64,11 @@ export default {
     this.fetchPosters()
   },
   methods: {
-    async logout() {},
+    async logout() {
+      await sharedClient.delete('users')
+      this.$store.commit(MUTATION_CURRENT_USER, null)
+      this.$router.push({ name: ROUTE_HOME })
+    },
     posterStyles(poster) {
       return { 'background-color': `#${poster.colour}` }
     },

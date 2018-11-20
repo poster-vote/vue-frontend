@@ -100,7 +100,7 @@ export default {
   methods: {
     async checkLogin() {
       let { data } = await sharedClient.get('users')
-      if (data) {
+      if (data.usr) {
         this.$store.commit(MUTATION_CURRENT_USER, data)
       } else {
         this.state = 'input'
