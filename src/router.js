@@ -4,7 +4,7 @@ import Home from './views/Home.vue'
 
 import {
   ROUTE_HOME,
-  ROUTE_POSTERS,
+  ROUTE_LIST_POSTERS,
   ROUTE_SHOW_POSTER,
   ROUTE_ADD_POSTER
 } from '@/const'
@@ -22,9 +22,9 @@ export default new Router({
     },
     {
       path: '/posters',
-      name: ROUTE_POSTERS,
+      name: ROUTE_LIST_POSTERS,
       component: () =>
-        import(/* webpackChunkName: "posters" */ './views/Posters.vue')
+        import(/* webpackChunkName: "posters" */ './views/ListPosters.vue')
     },
     {
       path: '/posters/add',

@@ -65,6 +65,8 @@ export default {
   },
   methods: {
     async logout() {
+      const message = 'Are you sure you want to logout?'
+      if (!confirm(message)) return
       await sharedClient.delete('users')
       this.$store.commit(MUTATION_CURRENT_USER, null)
       this.$router.push({ name: ROUTE_HOME })

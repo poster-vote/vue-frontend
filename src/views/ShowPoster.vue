@@ -23,7 +23,7 @@
 <script>
 import { sharedClient } from '@/services/ApiService'
 import SiteNav from '@/components/SiteNav'
-import { ROUTE_POSTERS, MUTATION_POSTERS } from '@/const'
+import { ROUTE_LIST_POSTERS, MUTATION_POSTERS } from '@/const'
 
 export default {
   components: { SiteNav },
@@ -50,7 +50,7 @@ export default {
       if (meta.success) {
         this.$store.commit(MUTATION_POSTERS, [data])
       } else {
-        this.$router.replace({ name: ROUTE_POSTERS })
+        this.$router.replace({ name: ROUTE_LIST_POSTERS })
       }
     }
   }

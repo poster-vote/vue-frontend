@@ -8,14 +8,17 @@
         h2.title.is-5.has-text-dark Welcome back!
         .buttons.is-centered
           router-link.button.is-link.is-medium(to="/posters") My posters →
+      
       centered-box(v-else-if="state === 'checking'")
         .control.is-loading
           p.is-size-4.has-text-grey-light Checking login
+      
       centered-box(v-else-if="state === 'sent'")
         .notification.is-success
           button.delete(@click="state = 'input'")
-          | We've sent an email to #[strong {{email}}]',
+          | We've sent an email to #[strong {{email}}],
           | check your email for a login link
+      
       centered-box(v-else)
         label.label(for="emailInput") Login using your email
         .field.has-addons.is-marginless
@@ -23,6 +26,7 @@
             input.input#emailInput(
               type="email",
               v-model="email",
+              :disabled="isWorking",
               @keyup.enter="submitLogin"
               placeholder="rob@example.com",
               autofocus
@@ -90,6 +94,9 @@ export default {
     user() {
       return this.$store.state.currentUser
     },
+    isWorking() {
+      return this.state === 'working'
+    },
     canSubmit() {
       return isEmail(this.email) && this.state === 'input'
     }
@@ -99,6 +106,7 @@ export default {
   },
   methods: {
     async checkLogin() {
+      this.state = 'checking'
       let { data } = await sharedClient.get('users')
       if (data.usr) {
         this.$store.commit(MUTATION_CURRENT_USER, data)
@@ -107,6 +115,8 @@ export default {
       }
     },
     async submitLogin() {
+      this.state = 'working'
+
       let { meta } = await sharedClient.post('users', {
         email: this.email
       })
