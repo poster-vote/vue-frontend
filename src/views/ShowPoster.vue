@@ -19,17 +19,39 @@
                 li: router-link(to="/posters") Posters
                 li.is-active: router-link(to="/posters/add") {{posterName}}
   
-  section.section(v-if="poster")
+  section.section(v-if="poster && options && votes")
     .container
       .columns
-        .column.is-two-fifths
-          div
-            h3.title.is-3 {{posterQuestion}}
-          ul.is-size-4
-            li(v-for="option, index in poster.options")
-              strong {{index + 1}}.
-              span  {{option.text}}
         .column
+          .field
+            div: h3.title.is-4 Question
+            p.is-size-5 {{posterQuestion}}
+          
+          .field
+            div: h3.title.is-4 Answers
+            ul.is-size-5
+              li(v-for="option, index in filteredOptions")
+                strong {{index + 1}}.
+                span  {{option.text}}
+        .column
+          .poster-result(v-if="hasVotes")
+            h2.result-title
+              span Poster results
+            .option(v-for="option, index in filteredOptions")
+              label
+                span.name {{option.text}}
+                span.vote {{votesForOption(index)}}
+                  |  – {{votesForOption(index) / totalVotes | percentage}}
+              progress.progress.is-large.is-info(
+                :value="votesForOption(index)",
+                :max="totalVotes"
+              )
+          .message.is-warning.votes(v-else)
+            .message-header
+              p No votes ... yet
+            .message-body
+              p This poster's votes haven't been recorded yet.
+              p To record votes, go up to a poster, dial the number on it and hold your phone up against the speaker.
 </template>
 
 <script>
@@ -40,7 +62,8 @@ import { ROUTE_LIST_POSTERS, MUTATION_POSTERS } from '@/const'
 export default {
   components: { SiteNav },
   data: () => ({
-    votes: null
+    votes: null,
+    options: null
   }),
   computed: {
     posterId() {
@@ -54,6 +77,18 @@ export default {
     },
     posterQuestion() {
       return this.poster ? this.poster.question : '~'
+    },
+    filteredOptions() {
+      return !this.options ? [] : this.options.filter(o => o.text)
+    },
+    totalVotes() {
+      let reducer = (sum, option, index) => sum + this.votesForOption(index)
+      return this.hasVotes ? this.filteredOptions.reduce(reducer, 0) : 0
+    },
+    hasVotes() {
+      const validVotes = this.votes.length === this.options.length
+      const hasValues = !this.votes.some(v => v.vote === 0)
+      return this.votes && this.options && validVotes && hasValues
     }
   },
   mounted() {
@@ -65,6 +100,7 @@ export default {
       let { meta, data } = await sharedClient.get(`posters/${this.posterId}`)
       if (meta.success) {
         this.$store.commit(MUTATION_POSTERS, [data])
+        this.options = data.options
       } else {
         this.$router.replace({ name: ROUTE_LIST_POSTERS })
       }
@@ -73,11 +109,39 @@ export default {
       let { meta, data } = await sharedClient.get(
         `posters/${this.posterId}/votes`
       )
-      console.log(meta)
-      console.log(data)
+      if (meta.success) this.votes = data
+    },
+    votesForOption(index) {
+      return this.votes && this.votes[index] ? this.votes[index].vote : '~'
     }
   }
 }
 </script>
 
-<style lang="sass"></style>
+<style lang="sass">
+.poster-result
+  padding: 1em 2em 2em
+  border: 2px dashed #dbdbdb
+  border-radius: 1em
+  position: relative
+  .result-title
+    text-align: center
+    font-weight: 700
+    position: relative
+    top: -2em
+    span
+      font-size: 1.2rem
+      background: #fff
+      padding: 0 1rem
+      max-width: 150%
+  .option
+    border-radius: 4px
+    &:not(:last-child)
+      margin-bottom: 1em
+    label
+      display: flex
+      justify-content: space-between
+      font-size: 1.2em
+    .name
+      font-weight: 700
+</style>
