@@ -128,12 +128,12 @@ export default {
     text-align: center
     font-weight: 700
     position: relative
-    top: -2em
+    top: -2.5em
     span
-      font-size: 1.2rem
+      font-size: 1.8rem
       background: #fff
       padding: 0 1rem
-      max-width: 150%
+      max-width: 75%
   .option
     border-radius: 4px
     &:not(:last-child)
