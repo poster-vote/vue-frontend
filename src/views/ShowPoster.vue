@@ -61,6 +61,7 @@
             .message-body
               p This poster's votes haven't been recorded yet.
               p To record votes, go up to a poster, dial the number on it and hold your phone up against the speaker.
+              p Make sure you have registered your poster using the instructions on the back.
 </template>
 
 <script>
