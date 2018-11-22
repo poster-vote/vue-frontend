@@ -55,6 +55,7 @@
                 :max="totalVotes",
                 :style="{ '--theme': '#' + poster.colour }"
               )
+            p.has-text-right Last scanned {{ lastScan | dateAgo }}
           .message.is-warning.votes(v-else)
             .message-header
               p No votes ... yet
@@ -110,6 +111,9 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser
+    },
+    lastScan() {
+      return this.votes && this.votes[0].recorded_at
     }
   },
   mounted() {
