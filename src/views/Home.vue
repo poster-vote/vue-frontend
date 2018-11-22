@@ -49,28 +49,28 @@
         .column.is-two-fifths
           .placeholder.image.is-16by9
             span 1.
-        .column.is-three-fifths.has-vertical-content
+        .column.has-vertical-content
           p.is-size-4 Quickly create and print posters that asks your questions
       
       .columns.is-reversed-desktop
         .column.is-two-fifths
           .placeholder.image.is-16by9
             span 2.
-        .column.is-three-fifths.has-vertical-content
+        .column.has-vertical-content
           p.is-size-4 Attach a PosterVote so people can press the buttons on the poster
       
       .columns
         .column.is-two-fifths
           .placeholder.image.is-16by9 
             span 3.
-        .column.is-three-fifths.has-vertical-content
+        .column.has-vertical-content
           p.is-size-4 Upload votes by playing the poster's sound down the phone.
       
       .columns.is-reversed-desktop
         .column.is-two-fifths
           .placeholder.image.is-16by9 
             span 4.
-        .column.is-three-fifths.has-vertical-content
+        .column.has-vertical-content
           p.is-size-4 Votes automatically appear on the website so you can review your engagement
 </template>
 
