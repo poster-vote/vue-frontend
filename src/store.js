@@ -1,20 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { MUTATION_POSTERS, MUTATION_CURRENT_USER } from '@/const'
+import {
+  MUTATION_POSTERS,
+  MUTATION_CURRENT_USER,
+  MUTATION_DELETE_POSTER
+} from '@/const'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     posters: [],
-    currentUser: null
+    currentUser: null,
+    checkedLogin: false
   },
   mutations: {
     [MUTATION_POSTERS](state, posters) {
       state.posters = mergeByKey(state.posters, posters)
     },
+    [MUTATION_DELETE_POSTER](state, id) {
+      state.posters = state.posters.filter(p => p.id !== id)
+    },
     [MUTATION_CURRENT_USER](state, user) {
+      state.checkedLogin = true
       state.currentUser = user
     }
   },

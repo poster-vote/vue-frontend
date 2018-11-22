@@ -16,23 +16,31 @@
             nav.breadcrumb
               ul
                 li: router-link(to="/") Home
-                li: router-link(to="/posters") Posters
-                li.is-active: router-link(to="/posters/add") {{posterName}}
+                li(v-if="currentUser"): router-link(to="/posters") Posters
+                li.is-active: a(href="#") {{posterName}}
   
   section.section(v-if="poster && options && votes")
     .container
       .columns
         .column
           .field
-            div: h3.title.is-4 Question
+            div: h4.title.is-4 Question
             p.is-size-5 {{posterQuestion}}
           
           .field
-            div: h3.title.is-4 Answers
+            div: h4.title.is-4 Answers
             ul.is-size-5
               li(v-for="option, index in filteredOptions")
                 strong {{index + 1}}.
                 span  {{option.text}}
+          
+          .field.actions(v-if="currentUser")
+            div: h4.title.is-4 Actions
+            .buttons
+              button.button.is-link.is-medium(@click="printPoster")
+                | Preview &amp; print
+              button.button.is-danger.is-medium(@click="destroyPoster")
+                | Close Poster
         .column
           .poster-result(v-if="hasVotes")
             h2.result-title
@@ -44,7 +52,8 @@
                   |  – {{votesForOption(index) / totalVotes | percentage}}
               progress.progress.is-large.is-info(
                 :value="votesForOption(index)",
-                :max="totalVotes"
+                :max="totalVotes",
+                :style="{ '--theme': '#' + poster.colour }"
               )
           .message.is-warning.votes(v-else)
             .message-header
@@ -57,7 +66,12 @@
 <script>
 import { sharedClient } from '@/services/ApiService'
 import SiteNav from '@/components/SiteNav'
-import { ROUTE_LIST_POSTERS, MUTATION_POSTERS } from '@/const'
+import {
+  ROUTE_HOME,
+  ROUTE_LIST_POSTERS,
+  MUTATION_POSTERS,
+  MUTATION_DELETE_POSTER
+} from '@/const'
 
 export default {
   components: { SiteNav },
@@ -68,6 +82,9 @@ export default {
   computed: {
     posterId() {
       return parseInt(this.$route.params.id, 10)
+    },
+    posterURI() {
+      return `/posters/${this.posterId}`
     },
     poster() {
       return this.$store.getters.posterById(this.posterId)
@@ -89,6 +106,9 @@ export default {
       const validVotes = this.votes.length === this.options.length
       const hasValues = !this.votes.some(v => v.vote === 0)
       return this.votes && this.options && validVotes && hasValues
+    },
+    currentUser() {
+      return this.$store.state.currentUser
     }
   },
   mounted() {
@@ -97,22 +117,36 @@ export default {
   },
   methods: {
     async fetchPoster() {
-      let { meta, data } = await sharedClient.get(`posters/${this.posterId}`)
+      let { meta, data } = await sharedClient.get(this.posterURI)
       if (meta.success) {
         this.$store.commit(MUTATION_POSTERS, [data])
         this.options = data.options
       } else {
-        this.$router.replace({ name: ROUTE_LIST_POSTERS })
+        this.$router.replace({
+          name: this.currentUser ? ROUTE_LIST_POSTERS : ROUTE_HOME
+        })
       }
     },
     async fetchVotes() {
-      let { meta, data } = await sharedClient.get(
-        `posters/${this.posterId}/votes`
-      )
+      let { meta, data } = await sharedClient.get(`${this.posterURI}/votes`)
       if (meta.success) this.votes = data
     },
     votesForOption(index) {
       return this.votes && this.votes[index] ? this.votes[index].vote : '~'
+    },
+    printPoster() {
+      // Open the poster pdf in a new tab
+      let pdfWindow = window.open(this.poster.pdf_url)
+      pdfWindow.focus()
+    },
+    async destroyPoster() {
+      let msg = `Are you sure you want to delete this poster?`
+      if (!confirm(msg)) return
+      let { meta } = await sharedClient.delete(this.posterURI)
+      if (meta.success) {
+        this.$store.commit(MUTATION_DELETE_POSTER, this.posterId)
+        this.$router.push({ name: ROUTE_LIST_POSTERS })
+      }
     }
   }
 }
@@ -120,6 +154,7 @@ export default {
 
 <style lang="sass">
 .poster-result
+  margin-top: 1em
   padding: 1em 2em 2em
   border: 2px dashed #dbdbdb
   border-radius: 1em
@@ -144,4 +179,12 @@ export default {
       font-size: 1.2em
     .name
       font-weight: 700
+    progress::-webkit-progress-value
+      background-color: var(--theme)
+    progress::-moz-progress-bar
+      background-color: var(--theme)
+
+.actions
+  .buttons
+    margin-top: 0.2em
 </style>

@@ -9,7 +9,7 @@
         .buttons.is-centered
           router-link.button.is-link.is-medium(to="/posters") My posters →
       
-      centered-box(v-else-if="state === 'checking'")
+      centered-box(v-else-if="!checkedLogin")
         .control.is-loading
           p.is-size-4.has-text-grey-light Checking login
       
@@ -76,10 +76,15 @@
 
 <script>
 import { sharedClient } from '@/services/ApiService'
-import { MUTATION_CURRENT_USER } from '@/const'
 import { isEmail } from '@/utils'
 import SiteNav from '@/components/SiteNav'
 import CenteredBox from '@/components/CenteredBox'
+
+const State = {
+  input: 'input',
+  working: 'working',
+  sent: 'sent'
+}
 
 export default {
   components: {
@@ -87,7 +92,7 @@ export default {
     CenteredBox
   },
   data: () => ({
-    state: 'checking',
+    state: State.input,
     email: ''
   }),
   computed: {
@@ -95,36 +100,27 @@ export default {
       return this.$store.state.currentUser
     },
     isWorking() {
-      return this.state === 'working'
+      return this.state === State.working
     },
     canSubmit() {
-      return isEmail(this.email) && this.state === 'input'
+      return isEmail(this.email) && this.state === State.input
+    },
+    checkedLogin() {
+      return this.$store.state.checkedLogin
     }
   },
-  mounted() {
-    this.checkLogin()
-  },
   methods: {
-    async checkLogin() {
-      this.state = 'checking'
-      let { data } = await sharedClient.get('users')
-      if (data.usr) {
-        this.$store.commit(MUTATION_CURRENT_USER, data)
-      } else {
-        this.state = 'input'
-      }
-    },
     async submitLogin() {
-      this.state = 'working'
+      this.state = State.working
 
       let { meta } = await sharedClient.post('users', {
         email: this.email
       })
 
-      this.state = meta.success ? 'sent' : 'input'
+      this.state = meta.success ? State.sent : State.input
     },
     resetForm() {
-      this.state = 'input'
+      this.state = State.input
     }
   }
 }

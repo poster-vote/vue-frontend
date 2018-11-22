@@ -16,7 +16,7 @@
             nav.breadcrumb
               ul
                 li: router-link(to="/") Home
-                li.is-active: a(href="/posters") Posters
+                li.is-active: a(href="#") Posters
         .level-right
           .level-item
             .buttons

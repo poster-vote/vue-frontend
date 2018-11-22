@@ -11,32 +11,47 @@ import {
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
       name: ROUTE_HOME,
-      component: Home
+      component: Home,
+      meta: { title: 'Home' }
     },
     {
       path: '/posters',
       name: ROUTE_LIST_POSTERS,
       component: () =>
-        import(/* webpackChunkName: "posters" */ './views/ListPosters.vue')
+        import(/* webpackChunkName: "posters" */ './views/ListPosters.vue'),
+      meta: { title: 'Your Posters' }
     },
     {
       path: '/posters/add',
       name: ROUTE_ADD_POSTER,
       component: () =>
-        import(/* webpackChunkName: "posters" */ './views/AddPoster.vue')
+        import(/* webpackChunkName: "posters" */ './views/AddPoster.vue'),
+      meta: { title: 'Add Poster' }
     },
     {
       path: '/posters/:id',
       name: ROUTE_SHOW_POSTER,
       component: () =>
-        import(/* webpackChunkName: "posters" */ './views/ShowPoster.vue')
+        import(/* webpackChunkName: "posters" */ './views/ShowPoster.vue'),
+      meta: { title: 'View Poster' }
     }
   ]
 })
+
+router.afterEach(route => {
+  const brand = 'PosterVote'
+  const pageTitle = route.meta && route.meta.title
+
+  Vue.nextTick(() => {
+    document.title = [pageTitle, brand].filter(s => s).join(' | ')
+  })
+})
+
+export default router

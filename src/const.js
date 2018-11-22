@@ -5,3 +5,4 @@ export const ROUTE_SHOW_POSTER = 'show_poster'
 
 export const MUTATION_POSTERS = 'posters'
 export const MUTATION_CURRENT_USER = 'current_user'
+export const MUTATION_DELETE_POSTER = 'delete_poster'
