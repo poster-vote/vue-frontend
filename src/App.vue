@@ -21,5 +21,5 @@ export default {
 
 <style lang="sass">
 @import "~bulma/bulma"
-@import "~@/assets/sass/common"
+@import "~@/assets/sass/styles"
 </style>
