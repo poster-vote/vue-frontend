@@ -40,7 +40,7 @@
               button.button.is-link.is-medium(@click="printPoster")
                 | Preview &amp; print
               button.button.is-danger.is-medium(@click="destroyPoster")
-                | Close Poster
+                | Archve Poster
         .column
           .poster-result(v-if="hasVotes")
             h2.result-title
