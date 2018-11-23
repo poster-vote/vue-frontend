@@ -25,6 +25,9 @@
   
   section.section
     .container
+      .message.is-link.is-medium(v-if="posters.length === 0")
+        .message-body
+          p Looks like you haven't created any posters yet, why not create one?
       .columns.is-multiline
         .column.is-one-third(v-for="poster in posters")
           .poster-cell(:style="posterStyles(poster)")
