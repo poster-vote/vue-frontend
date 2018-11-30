@@ -95,3 +95,7 @@ services:
       - CONFIG_KEYS=API_URL
       - API_URL=https://api.postervote.example.io
 ```
+
+---
+
+> The code on https://github.com/poster-vote/vue-frontend is a mirror of https://openlab.ncl.ac.uk/gitlab/poster-vote/vue-frontend
