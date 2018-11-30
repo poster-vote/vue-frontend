@@ -6,16 +6,20 @@ It is a [PWA](https://developers.google.com/web/progressive-web-apps/)
 served inside a single `index.html` file which is compiled through the
 [vue cli](https://cli.vuejs.org/) using [Webpack](https://webpack.js.org/).
 
+<!-- toc-head -->
+
 ## Table of Contents
 
-- [Development](/development)
-  - [Scripts](/scripts)
-  - [Structure](/structure)
-  - [Formatting](/formatting)
-  - [Other tools](/other-tools)
-- [Deployment](/deployment)
-  - [Building the image](/building-the-image)
-  - [Using the image](/using-the-image)
+- [Development](#development)
+  - [Scripts](#scripts)
+  - [Structure](#structure)
+  - [Formatting](#formatting)
+  - [Other tools](#other-tools)
+- [Deployment](#deployment)
+  - [Building the image](#building-the-image)
+  - [Using the image](#using-the-image)
+
+<!-- toc-tail -->
 
 ## Development
 
