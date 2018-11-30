@@ -20,11 +20,13 @@ const { join } = require('path')
 
       title = title.trim()
 
-      headings.push({
-        title,
-        level: hashes.length,
-        handle: casex(title, 'ca-se')
-      })
+      if (title !== 'Table of Contents') {
+        headings.push({
+          title,
+          level: hashes.length,
+          handle: casex(title, 'ca-se')
+        })
+      }
 
       match = parser.exec(readme)
     }
@@ -34,7 +36,7 @@ const { join } = require('path')
     headings.forEach(({ title, handle, level }) => {
       let item = ''
       while (item.length / 2 < level - 2) item += '  '
-      item += `* [${title}](${handle})`
+      item += `* [${title}](/${handle})`
       output.push(item)
     })
 
