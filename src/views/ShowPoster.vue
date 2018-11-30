@@ -128,6 +128,7 @@ export default {
         this.$store.commit(MUTATION_POSTERS, [data])
         this.options = data.options
       } else {
+        SplashMessageBus.$emit('message', `Couldn't find poster`)
         this.$router.replace({
           name: this.currentUser ? ROUTE_LIST_POSTERS : ROUTE_HOME
         })
