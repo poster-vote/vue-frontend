@@ -68,6 +68,7 @@
 <script>
 import { sharedClient } from '@/services/ApiService'
 import SiteNav from '@/components/SiteNav'
+import { SplashMessageBus } from '@/busses'
 import {
   ROUTE_HOME,
   ROUTE_LIST_POSTERS,
@@ -149,6 +150,7 @@ export default {
       if (!confirm(msg)) return
       let { meta } = await sharedClient.delete(this.posterURI)
       if (meta.success) {
+        SplashMessageBus.$emit('message', 'Poster removed')
         this.$store.commit(MUTATION_DELETE_POSTER, this.posterId)
         this.$router.push({ name: ROUTE_LIST_POSTERS })
       }

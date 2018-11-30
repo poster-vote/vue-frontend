@@ -45,6 +45,7 @@
 <script>
 import { sharedClient } from '@/services/ApiService'
 import SiteNav from '@/components/SiteNav'
+import { SplashMessageBus } from '@/busses'
 import {
   MUTATION_POSTERS,
   MUTATION_CURRENT_USER,
@@ -71,6 +72,7 @@ export default {
       const message = 'Are you sure you want to logout?'
       if (!confirm(message)) return
       await sharedClient.delete('users')
+      SplashMessageBus.$emit('message', 'Logged out')
       this.$store.commit(MUTATION_CURRENT_USER, null)
       this.$router.push({ name: ROUTE_HOME })
     },

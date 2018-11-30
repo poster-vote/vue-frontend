@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env node
 
 const casex = require('casex')
 const fs = require('fs')
@@ -29,7 +29,7 @@ const { join } = require('path')
       match = parser.exec(readme)
     }
 
-    let output = ['## Table of Contents']
+    let output = ['## Table of Contents', '']
 
     headings.forEach(({ title, handle, level }) => {
       let item = ''

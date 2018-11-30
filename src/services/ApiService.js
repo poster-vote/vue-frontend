@@ -53,4 +53,9 @@ export class ApiService {
   }
 }
 
-export const sharedClient = new ApiService('http://localhost:3000')
+const url =
+  window.CONFIG && window.CONFIG.API_URL
+    ? window.CONFIG.API_URL
+    : 'http://localhost:3000'
+
+export const sharedClient = new ApiService(url)

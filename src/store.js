@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 import {
   MUTATION_POSTERS,
@@ -32,7 +33,8 @@ export default new Vuex.Store({
     posterById: state => id => {
       return state.posters.find(poster => poster.id === id)
     }
-  }
+  },
+  plugins: [createPersistedState()]
 })
 
 /** Returns a shallow copy of setB merged into setA by comparing element.id */

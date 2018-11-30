@@ -2,13 +2,12 @@
 
 ## Table of Contents
 
-- [vue-frontend](vue-frontend)
-  - [Project setup](project-setup)
-    - [Compiles and hot-reloads for development](compiles-and-hot-reloads-for-development)
-    - [Compiles and minifies for production](compiles-and-minifies-for-production)
-    - [Run your tests](run-your-tests)
-    - [Lints and fixes files](lints-and-fixes-files)
-    - [Customize configuration](customize-configuration)
+- [Project setup](project-setup)
+  - [Compiles and hot-reloads for development](compiles-and-hot-reloads-for-development)
+  - [Compiles and minifies for production](compiles-and-minifies-for-production)
+  - [Run your tests](run-your-tests)
+  - [Lints and fixes files](lints-and-fixes-files)
+  - [Customize configuration](customize-configuration)
 
 ## Project setup
 

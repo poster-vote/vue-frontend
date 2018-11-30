@@ -110,6 +110,7 @@ import color from 'color'
 import SiteNav from '@/components/SiteNav'
 import { sharedClient } from '@/services/ApiService'
 import { MUTATION_POSTERS, ROUTE_SHOW_POSTER } from '@/const'
+import { SplashMessageBus } from '@/busses'
 
 const letters = ['A', 'B', 'C', 'D', 'E']
 
@@ -186,6 +187,7 @@ export default {
       if (meta.success) {
         this.$store.commit(MUTATION_POSTERS, [data])
         const params = { id: data.id }
+        SplashMessageBus.$emit('message', 'Poster created')
         this.$router.push({ name: ROUTE_SHOW_POSTER, params })
       } else {
         this.state = 'input'
