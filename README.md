@@ -6,6 +6,8 @@ It is a [PWA](https://developers.google.com/web/progressive-web-apps/)
 served inside a single `index.html` file which is compiled through the
 [vue cli](https://cli.vuejs.org/) using [Webpack](https://webpack.js.org/).
 
+[What is PosterVote?](https://github.com/poster-vote/about)
+
 <!-- toc-head -->
 
 ## Table of Contents
