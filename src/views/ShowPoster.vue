@@ -55,7 +55,7 @@
                 :max="totalVotes",
                 :style="{ '--theme': '#' + poster.colour }"
               )
-            p.has-text-right Last scanned {{ lastScan | dateAgo }}
+            p.has-text-right(v-if="lastUpdate") Last scanned {{ lastUpdate | dateAgo }}
           .message.is-warning.votes(v-else)
             .message-header
               p No votes ... yet
@@ -80,7 +80,8 @@ export default {
   components: { SiteNav },
   data: () => ({
     votes: null,
-    options: null
+    options: null,
+    lastUpdate: null
   }),
   computed: {
     posterId() {
@@ -112,9 +113,6 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser
-    },
-    lastScan() {
-      return this.votes && this.votes[0].recorded_at
     }
   },
   mounted() {
@@ -128,7 +126,10 @@ export default {
         this.$store.commit(MUTATION_POSTERS, [data])
         this.options = data.options
       } else {
-        SplashMessageBus.$emit('message', `Couldn't find poster`)
+        SplashMessageBus.$emit('message', {
+          type: 'danger',
+          body: `Couldn't find poster`
+        })
         this.$router.replace({
           name: this.currentUser ? ROUTE_LIST_POSTERS : ROUTE_HOME
         })
@@ -136,7 +137,10 @@ export default {
     },
     async fetchVotes() {
       let { meta, data } = await sharedClient.get(`${this.posterURI}/votes`)
-      if (meta.success) this.votes = data
+      if (meta.success) {
+        this.votes = data.votes
+        this.lastUpdate = data.lastUpdate
+      }
     },
     votesForOption(index) {
       return this.votes && this.votes[index] ? this.votes[index].vote : '~'
