@@ -20,6 +20,7 @@ served inside a single `index.html` file which is compiled through the
 - [Deployment](#deployment)
   - [Building the image](#building-the-image)
   - [Using the image](#using-the-image)
+- [Future Work](#future-work)
 
 <!-- toc-tail -->
 
@@ -101,6 +102,10 @@ services:
       - CONFIG_KEYS=API_URL
       - API_URL=https://api.postervote.example.io
 ```
+
+## Future Work
+
+- Only show your posters on `/posters` (if you visted another and its cached)
 
 ---
 
