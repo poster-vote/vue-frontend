@@ -41,7 +41,7 @@
   section.section
     .container.has-text-centered
       h1.title.is-1 PosterVote
-      h2.subtitle Embedded voting inside printed posters
+      h2.subtitle Digital posters that track engagement and give you live results.
   
   section.section
     .container
@@ -57,7 +57,7 @@
           .placeholder.image.is-16by9
             span 2.
         .column.has-vertical-content
-          p.is-size-4 Attach a PosterVote so people can press the buttons on the poster
+          p.is-size-4 Attach a PosterVote device so people can press the buttons on the poster
       
       .columns
         .column.is-two-fifths
