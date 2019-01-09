@@ -1,6 +1,6 @@
 {
-  "name": "vue-frontend",
-  "short_name": "vue-frontend",
+  "name": "Poster Vote",
+  "short_name": "poster-vote",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

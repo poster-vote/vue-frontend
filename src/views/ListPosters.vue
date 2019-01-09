@@ -17,7 +17,7 @@
               ul
                 li: router-link(to="/") Home
                 li.is-active: a(href="#") Posters
-        .level-right
+        .level-right(v-if="user")
           .level-item
             .buttons
               router-link.button.is-success(:to="addPosterRoute") Create poster
@@ -26,8 +26,12 @@
   section.section.page-expand
     .container
       .message.is-link.is-medium(v-if="posters.length === 0")
-        .message-body
+        .message-body(v-if="user")
           p Looks like you haven't created any posters yet, why not create one?
+        .message-body(v-else)
+          p 
+            router-link(to="/") Sign in
+            |  to create posters 
       .columns.is-multiline
         .column.is-one-third(v-for="poster in posters")
           .poster-cell(:style="posterStyles(poster)")
@@ -59,6 +63,9 @@ import {
 export default {
   components: { SiteNav, SiteFooter },
   computed: {
+    user() {
+      return this.$store.state.currentUser
+    },
     posters() {
       return this.$store.state.posters
     },
