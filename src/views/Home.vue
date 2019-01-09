@@ -1,5 +1,5 @@
 <template lang="pug">
-.home
+.home.page
   .hero.is-primary
     .hero-head
       site-nav
@@ -43,14 +43,14 @@
       h1.title.is-1 PosterVote
       h2.subtitle Digital posters that track engagement and give you live results.
   
-  section.section
+  section.section.onboarding.page-expand
     .container
       .columns
         .column.is-two-fifths
           .image.is-16by9
             img(src="../assets/img/onboard/01.svg")
         .column.has-vertical-content
-          p.is-size-4 Quickly create and print posters that asks your questions
+          p.is-size-4 Quickly create and print posters that ask your questions
       
       .columns.is-reversed-desktop
         .column.is-two-fifths
@@ -64,14 +64,15 @@
           .image.is-16by9 
             img(src="../assets/img/onboard/03.svg")
         .column.has-vertical-content
-          p.is-size-4 Upload votes by playing the poster's sound down the phone.
+          p.is-size-4 Upload votes by playing the poster down the phone and receive them as an SMS
       
       .columns.is-reversed-desktop
         .column.is-two-fifths
           .image.is-16by9 
             img(src="../assets/img/onboard/04.svg")
         .column.has-vertical-content
-          p.is-size-4 Votes automatically appear on the website so you can review your engagement
+          p.is-size-4 See the votes appear on the website so you can review your engagement
+  site-footer
 </template>
 
 <script>
@@ -79,6 +80,7 @@ import { sharedClient } from '@/services/ApiService'
 import { isEmail } from '@/utils'
 import SiteNav from '@/components/SiteNav'
 import CenteredBox from '@/components/CenteredBox'
+import SiteFooter from '@/components/SiteFooter'
 
 const State = {
   input: 'input',
@@ -89,7 +91,8 @@ const State = {
 export default {
   components: {
     SiteNav,
-    CenteredBox
+    CenteredBox,
+    SiteFooter
   },
   data: () => ({
     state: State.input,
@@ -125,3 +128,12 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.home
+
+  +touch
+    .onboarding .columns
+      padding-bottom: 5em
+      text-align: center
+</style>

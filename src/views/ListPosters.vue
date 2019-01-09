@@ -1,5 +1,5 @@
 <template lang="pug">
-.posters
+.posters.page
   .hero.is-primary
     .hero-head
       site-nav
@@ -23,7 +23,7 @@
               router-link.button.is-success(:to="addPosterRoute") Create poster
               button.button.is-danger(@click="logout") Logout
   
-  section.section
+  section.section.page-expand
     .container
       .message.is-link.is-medium(v-if="posters.length === 0")
         .message-body
@@ -40,11 +40,13 @@
                 router-link.button.is-white.is-outlined(
                   :to="posterRoute(poster)"
                 ) View Poster →
+  site-footer
 </template>
 
 <script>
 import { sharedClient } from '@/services/ApiService'
 import SiteNav from '@/components/SiteNav'
+import SiteFooter from '@/components/SiteFooter'
 import { SplashMessageBus } from '@/busses'
 import {
   MUTATION_POSTERS,
@@ -55,7 +57,7 @@ import {
 } from '@/const'
 
 export default {
-  components: { SiteNav },
+  components: { SiteNav, SiteFooter },
   computed: {
     posters() {
       return this.$store.state.posters

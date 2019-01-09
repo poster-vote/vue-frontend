@@ -1,0 +1,34 @@
+<template lang="pug">
+footer.footer
+  .content.has-text-centered
+    p 
+      span Made by 
+      a(href="https://openlab.ncl.ac.uk", target="_blank") Open Lab
+    p.links
+      a(href="https://github.com/poster-vote/about", target="_blank") Getting Devices
+      a(href="https://github.com/poster-vote", target="_blank") Open Source
+</template>
+
+<script>
+import { ROUTE_ABOUT } from '@/const'
+
+export default {
+  computed: {
+    aboutRoute() {
+      return { name: ROUTE_ABOUT }
+    }
+  }
+}
+</script>
+
+<style lang="sass">
+.footer
+  padding: 2rem 1rem 4rem
+  a
+    color: $black
+    text-decoration: underline $grey-light
+  .links
+    *:not(:last-child):after
+      content: '|'
+      padding: 0 0.5em
+</style>

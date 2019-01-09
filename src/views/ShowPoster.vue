@@ -1,5 +1,5 @@
 <template lang="pug">
-.show-poster
+.show-poster.page
   .hero.is-primary
     .hero-head
       site-nav
@@ -19,55 +19,58 @@
                 li(v-if="currentUser"): router-link(to="/posters") Posters
                 li.is-active: a(href="#") {{posterName}}
   
-  section.section(v-if="poster && options && votes")
-    .container
-      .columns
-        .column
-          .field
-            div: h4.title.is-4 Question
-            p.is-size-5 {{posterQuestion}}
-          
-          .field
-            div: h4.title.is-4 Answers
-            ul.is-size-5
-              li(v-for="option, index in filteredOptions")
-                strong {{index + 1}}.
-                span  {{option.text}}
-          
-          .field.actions(v-if="currentUser")
-            div: h4.title.is-4 Actions
-            .buttons
-              button.button.is-link.is-medium(@click="printPoster")
-                | Preview &amp; print
-              button.button.is-danger.is-medium(@click="destroyPoster")
-                | Archive Poster
-        .column
-          .poster-result(v-if="hasVotes")
-            h2.result-title
-              span Poster results
-            .option(v-for="option, index in filteredOptions")
-              label
-                span.name {{option.text}}
-                span.vote {{votesForOption(index)}}
-                  |  – {{votesForOption(index) / totalVotes | percentage}}
-              progress.progress.is-large.is-info(
-                :value="votesForOption(index)",
-                :max="totalVotes",
-                :style="{ '--theme': '#' + poster.colour }"
-              )
-            p.has-text-right(v-if="lastUpdate") Last scanned {{ lastUpdate | dateAgo }}
-          .message.is-warning.votes(v-else)
-            .message-header
-              p No votes ... yet
-            .message-body
-              p This poster's votes haven't been recorded yet.
-              p To record votes, go up to a poster, dial the number on it and hold your phone up against the speaker.
-              p Make sure you have registered your poster using the instructions on the back.
+  .page-expand
+    section.section(v-if="poster && options && votes")
+      .container
+        .columns
+          .column
+            .field
+              div: h4.title.is-4 Question
+              p.is-size-5 {{posterQuestion}}
+            
+            .field
+              div: h4.title.is-4 Answers
+              ul.is-size-5
+                li(v-for="option, index in filteredOptions")
+                  strong {{index + 1}}.
+                  span  {{option.text}}
+            
+            .field.actions(v-if="currentUser")
+              div: h4.title.is-4 Actions
+              .buttons
+                button.button.is-link.is-medium(@click="printPoster")
+                  | Preview &amp; print
+                button.button.is-danger.is-medium(@click="destroyPoster")
+                  | Archive Poster
+          .column
+            .poster-result(v-if="hasVotes")
+              h2.result-title
+                span Poster results
+              .option(v-for="option, index in filteredOptions")
+                label
+                  span.name {{option.text}}
+                  span.vote {{votesForOption(index)}}
+                    |  – {{votesForOption(index) / totalVotes | percentage}}
+                progress.progress.is-large.is-info(
+                  :value="votesForOption(index)",
+                  :max="totalVotes",
+                  :style="{ '--theme': '#' + poster.colour }"
+                )
+              p.has-text-right(v-if="lastUpdate") Last scanned {{ lastUpdate | dateAgo }}
+            .message.is-warning.votes(v-else)
+              .message-header
+                p No votes ... yet
+              .message-body
+                p This poster's votes haven't been recorded yet.
+                p To record votes, go up to a poster, dial the number on it and hold your phone up against the speaker.
+                p Make sure you have registered your poster using the instructions on the back.
+  site-footer
 </template>
 
 <script>
 import { sharedClient } from '@/services/ApiService'
 import SiteNav from '@/components/SiteNav'
+import SiteFooter from '@/components/SiteFooter'
 import { SplashMessageBus } from '@/busses'
 import {
   ROUTE_HOME,
@@ -77,7 +80,7 @@ import {
 } from '@/const'
 
 export default {
-  components: { SiteNav },
+  components: { SiteNav, SiteFooter },
   data: () => ({
     votes: null,
     options: null,
