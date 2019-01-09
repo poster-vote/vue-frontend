@@ -15,11 +15,14 @@ if (process.env.NODE_ENV === 'production') {
       console.log('Content has been cached for offline use.')
     },
     updated() {
-      console.log('New content is available; please refresh.')
+      SplashMessageBus.$emit('message', {
+        body: 'An update is available, please refresh',
+        type: 'info'
+      })
     },
     offline() {
       SplashMessageBus.$emit('message', {
-        body: 'App is running in offline mode',
+        body: 'Running in offline mode',
         type: 'info'
       })
     },

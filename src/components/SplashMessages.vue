@@ -11,32 +11,36 @@
 <script>
 import { SplashMessageBus } from '@/busses'
 
+// NOTE: SplashMessages.vue must be loaded before registerServiceWorker.js
+
+let allMessages = []
+
+SplashMessageBus.$on('message', message => {
+  if (typeof message === 'string') message = { body: message }
+  const { body, type = 'success', duration = 4000 } = message
+  const expiry = new Date().getTime() + duration
+  allMessages.push({ body, type, expiry })
+})
+
 export default {
   data: () => ({
     timerId: null,
     messages: []
   }),
   mounted() {
-    SplashMessageBus.$on('message', this.onMessage)
     this.timerId = setInterval(() => this.tickMessage(), 1000)
+    this.messages = allMessages
   },
   destroyed() {
-    SplashMessageBus.$off('message', this.onMessage)
     clearInterval(this.timerId)
   },
   methods: {
     messageClasses(message) {
       return [`is-${message.type}`]
     },
-    onMessage(message) {
-      if (typeof message === 'string') message = { body: message }
-      const { body, type = 'success', duration = 4000 } = message
-      const expiry = new Date().getTime() + duration
-      this.messages.push({ body, type, expiry })
-    },
     tickMessage() {
       const now = new Date().getTime()
-      this.messages = this.messages.filter(m => m.expiry > now)
+      this.messages = allMessages.filter(m => m.expiry > now)
     }
   }
 }
