@@ -26,6 +26,7 @@ export default new Vuex.Store({
     [MUTATION_CURRENT_USER](state, user) {
       state.checkedLogin = true
       state.currentUser = user
+      state.posters = []
     }
   },
   actions: {},
