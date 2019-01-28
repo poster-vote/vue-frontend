@@ -35,7 +35,7 @@
                   strong {{index + 1}}.
                   span  {{option.text}}
             
-            .field.actions(v-if="currentUser")
+            .field.actions(v-if="isOwner")
               div: h4.title.is-4 Actions
               .buttons
                 button.button.is-link.is-medium(@click="printPoster")
@@ -116,6 +116,9 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser
+    },
+    isOwner() {
+      return this.poster && this.poster.creator_hash === this.currentUser
     }
   },
   mounted() {
