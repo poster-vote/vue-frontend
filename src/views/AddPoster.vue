@@ -48,14 +48,14 @@
 </template>
 
 <script>
-import color from 'color'
+import { sharedClient } from '@/services/ApiService'
+import { MUTATION_POSTERS, ROUTE_SHOW_POSTER } from '@/const'
+import { randomColour } from '@/utils'
+import { SplashMessageBus } from '@/busses'
 
 import SiteNav from '@/components/SiteNav'
 import SiteFooter from '@/components/SiteFooter'
 import PosterForm from '@/components/PosterForm'
-import { sharedClient } from '@/services/ApiService'
-import { MUTATION_POSTERS, ROUTE_SHOW_POSTER } from '@/const'
-import { SplashMessageBus } from '@/busses'
 
 const optionLength = 30
 const questionLength = 120
@@ -69,7 +69,7 @@ export default {
       poster: {
         name: '',
         question: '',
-        colour: this.randomColour(),
+        colour: randomColour(),
         owner: '',
         contact: ''
       },
@@ -94,10 +94,6 @@ export default {
     }
   },
   methods: {
-    randomColour() {
-      const hue = Math.floor(Math.random() * 360)
-      return color.hsl(hue, 99, 53).hex()
-    },
     resetMessages() {
       this.messages = []
     },

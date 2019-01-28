@@ -50,11 +50,6 @@
 </template>
 
 <script>
-import color from 'color'
-
-import SiteNav from '@/components/SiteNav'
-import SiteFooter from '@/components/SiteFooter'
-import PosterForm from '@/components/PosterForm'
 import { sharedClient } from '@/services/ApiService'
 import {
   ROUTE_SHOW_POSTER,
@@ -62,6 +57,10 @@ import {
   MUTATION_POSTERS
 } from '@/const'
 import { SplashMessageBus } from '@/busses'
+
+import SiteNav from '@/components/SiteNav'
+import SiteFooter from '@/components/SiteFooter'
+import PosterForm from '@/components/PosterForm'
 
 const questionLength = 120
 const optionLength = 30
@@ -114,10 +113,6 @@ export default {
     this.fetchPoster()
   },
   methods: {
-    randomColour() {
-      const hue = Math.floor(Math.random() * 360)
-      return color.hsl(hue, 99, 53).hex()
-    },
     resetMessages() {
       this.messages = []
     },

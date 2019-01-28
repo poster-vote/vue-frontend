@@ -65,7 +65,7 @@ section.section.poster-form: .container: .columns
 
 <script>
 import Vue from 'vue'
-import color from 'color'
+import { randomColour } from '@/utils'
 
 const letters = ['A', 'B', 'C', 'D', 'E']
 
@@ -96,12 +96,8 @@ export default {
     optionPlaceholder(i) {
       return `e.g. Option ${letters[i % letters.length]}`
     },
-    randomColour() {
-      const hue = Math.floor(Math.random() * 360)
-      return color.hsl(hue, 99, 53).hex()
-    },
     shuffleColour() {
-      this.poster.colour = this.randomColour()
+      this.poster.colour = randomColour()
     }
   }
 }
