@@ -67,7 +67,7 @@ export default {
       return this.$store.state.currentUser
     },
     posters() {
-      return this.$store.state.posters
+      return this.$store.state.posters.filter(p => p.creator_hash === this.user)
     },
     addPosterRoute() {
       return { name: ROUTE_ADD_POSTER }
