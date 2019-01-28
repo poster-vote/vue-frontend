@@ -7,6 +7,7 @@ footer.footer
     p.links
       a(href="https://github.com/poster-vote/about", target="_blank") Getting Devices
       a(href="https://github.com/poster-vote", target="_blank") Open Source
+      span.version  version {{appVersion}}
 </template>
 
 <script>
@@ -16,6 +17,9 @@ export default {
   computed: {
     aboutRoute() {
       return { name: ROUTE_ABOUT }
+    },
+    appVersion() {
+      return process.env.VUE_APP_VERSION
     }
   }
 }
@@ -31,4 +35,7 @@ export default {
     *:not(:last-child):after
       content: '|'
       padding: 0 0.5em
+  .version
+    user-select: all
+    color: $grey
 </style>
