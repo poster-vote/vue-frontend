@@ -6,7 +6,8 @@ import {
   ROUTE_HOME,
   ROUTE_LIST_POSTERS,
   ROUTE_SHOW_POSTER,
-  ROUTE_ADD_POSTER
+  ROUTE_ADD_POSTER,
+  ROUTE_EDIT_POSTER
 } from '@/const'
 
 Vue.use(Router)
@@ -41,6 +42,13 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "posters" */ './views/ShowPoster.vue'),
       meta: { title: 'View Poster' }
+    },
+    {
+      path: '/posters/:id/edit',
+      name: ROUTE_EDIT_POSTER,
+      component: () =>
+        import(/* webpackChunkName: "posters" */ './views/EditPoster.vue'),
+      meta: { title: 'Edit Poster' }
     }
   ]
 })

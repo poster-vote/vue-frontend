@@ -19,51 +19,52 @@
                 li(v-if="currentUser"): router-link(to="/posters") Posters
                 li.is-active: a(href="#") {{posterName}}
   
-  .page-expand
-    section.section(v-if="poster && options && votes")
-      .container
-        .columns
-          .column
-            .field
-              div: h4.title.is-4 Question
-              p.is-size-5 {{posterQuestion}}
-            
-            .field
-              div: h4.title.is-4 Answers
-              ul.is-size-5
-                li(v-for="option, index in filteredOptions")
-                  strong {{index + 1}}.
-                  span  {{option.text}}
-            
-            .field.actions(v-if="isOwner")
-              div: h4.title.is-4 Actions
-              .buttons
-                button.button.is-link.is-medium(@click="printPoster")
-                  | Preview &amp; print
-                button.button.is-danger.is-medium(@click="destroyPoster")
-                  | Archive Poster
-          .column
-            .poster-result(v-if="hasVotes")
-              h2.result-title
-                span Poster results
-              .option(v-for="option, index in filteredOptions")
-                label
-                  span.name {{option.text}}
-                  span.vote {{votesForOption(index)}}
-                    |  – {{votesForOption(index) / totalVotes | percentage}}
-                progress.progress.is-large.is-info(
-                  :value="votesForOption(index)",
-                  :max="totalVotes",
-                  :style="{ '--theme': '#' + poster.colour }"
-                )
-              p.has-text-right(v-if="lastUpdate") Last scanned {{ lastUpdate | dateAgo }}
-            .message.is-warning.votes(v-else)
-              .message-header
-                p No votes ... yet
-              .message-body
-                p This poster's votes haven't been recorded yet.
-                p To record votes, go up to a poster, dial the number on it and hold your phone up against the speaker.
-                p Make sure you have registered your poster using the instructions on the back.
+  section.section.page-expand(v-if="poster && options && votes")
+    .container
+      .columns
+        .column
+          .field
+            div: h4.title.is-4 Question
+            p.is-size-5 {{posterQuestion}}
+          
+          .field
+            div: h4.title.is-4 Answers
+            ul.is-size-5
+              li(v-for="option, index in filteredOptions")
+                strong {{index + 1}}.
+                span  {{option.text}}
+          
+          .field.actions(v-if="isOwner")
+            div: h4.title.is-4 Actions
+            .buttons
+              router-link.button.is-link(:to="editRoute")
+                | Edit Poster
+              button.button.is-primary(@click="printPoster")
+                | Preview &amp; Print
+              button.button.is-danger(@click="destroyPoster")
+                | Archive
+        .column
+          .poster-result(v-if="hasVotes")
+            h2.result-title
+              span Poster results
+            .option(v-for="option, index in filteredOptions")
+              label
+                span.name {{option.text}}
+                span.vote {{votesForOption(index)}}
+                  |  – {{votesForOption(index) / totalVotes | percentage}}
+              progress.progress.is-large.is-info(
+                :value="votesForOption(index)",
+                :max="totalVotes",
+                :style="{ '--theme': '#' + poster.colour }"
+              )
+            p.has-text-right(v-if="lastUpdate") Last scanned {{ lastUpdate | dateAgo }}
+          .message.is-warning.votes(v-else)
+            .message-header
+              p No votes ... yet
+            .message-body
+              p This poster's votes haven't been recorded yet.
+              p To record votes, go up to a poster, dial the number on it and hold your phone up against the speaker.
+              p Make sure you have registered your poster using the instructions on the back.
   site-footer
 </template>
 
@@ -75,6 +76,7 @@ import { SplashMessageBus } from '@/busses'
 import {
   ROUTE_HOME,
   ROUTE_LIST_POSTERS,
+  ROUTE_EDIT_POSTER,
   MUTATION_POSTERS,
   MUTATION_DELETE_POSTER
 } from '@/const'
@@ -119,6 +121,9 @@ export default {
     },
     isOwner() {
       return this.poster && this.poster.creator_hash === this.currentUser
+    },
+    editRoute() {
+      return { name: ROUTE_EDIT_POSTER, params: { id: this.posterId } }
     }
   },
   mounted() {

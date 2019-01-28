@@ -43,6 +43,15 @@ export class ApiService {
     })
   }
 
+  put(url, data, config = {}) {
+    return this.makeRequest({
+      method: 'put',
+      url,
+      data,
+      ...config
+    })
+  }
+
   /** Perform a 'delete' */
   delete(url, config = {}) {
     return this.makeRequest({
