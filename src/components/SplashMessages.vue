@@ -11,8 +11,6 @@
 <script>
 import { SplashMessageBus } from '@/busses'
 
-// NOTE: SplashMessages.vue must be loaded before registerServiceWorker.js
-
 let allMessages = []
 
 SplashMessageBus.$on('message', message => {
