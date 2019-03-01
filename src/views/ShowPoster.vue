@@ -108,12 +108,16 @@ export default {
       return !this.options ? [] : this.options.filter(o => o.text)
     },
     totalVotes() {
-      let reducer = (sum, option, index) => sum + this.votesForOption(index)
-      return this.hasVotes ? this.filteredOptions.reduce(reducer, 0) : 0
+      if (!this.hasVotes) return 0
+      let sumVotes = (sum, option, index) => {
+        let value = this.votes[index] || { vote: 0 }
+        return sum + value.vote
+      }
+      return this.filteredOptions.reduce(sumVotes, 0)
     },
     hasVotes() {
       const validVotes = this.votes.length === this.options.length
-      const hasValues = !this.votes.some(v => v.vote === 0)
+      const hasValues = this.votes.some(v => v.vote > 0)
       return this.votes && this.options && validVotes && hasValues
     },
     currentUser() {
