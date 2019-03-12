@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "prettier": "prettier --write */**/*.{js,vue,json,css,md}"
+    "prettier": "prettier --write */**/*.{js,vue,json,css,md}",
+    "gen-readme-toc": "md-toc -i"
   },
   "husky": {
     "hooks": {
@@ -30,6 +31,7 @@
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
+    "@robb_j/md-toc": "^0.2.2",
     "@vue/cli-plugin-babel": "^3.3.0",
     "@vue/cli-plugin-eslint": "^3.3.0",
     "@vue/cli-service": "^3.3.1",
@@ -46,6 +48,7 @@
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.0.1",
     "sharp": "^0.21.3",
+    "vue-svg-loader": "^0.12.0",
     "vue-template-compiler": "^2.5.22"
   }
 }

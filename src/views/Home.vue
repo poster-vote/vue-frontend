@@ -54,7 +54,7 @@
       
       .columns.is-reversed-desktop
         .column.is-two-fifths
-          .is-16by9
+          .image.is-16by9
             img(src="../assets/img/onboard/02.svg")
         .column.has-vertical-content
           p.is-size-4 Attach a PosterVote device so people can press the buttons on the poster
