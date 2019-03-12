@@ -91,7 +91,23 @@ export default {
         validOptions &&
         this.poster.question.length <= questionLength
       )
+    },
+    hasChanges() {
+      return (
+        this.poster.name ||
+        this.poster.question ||
+        this.poster.owner ||
+        this.poster.contact ||
+        this.options.some(o => o)
+      )
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (!this.hasChanges) return next()
+    let confirmed = confirm(
+      'You have unsaved changes, are you sure you want to leave?'
+    )
+    return next(confirmed)
   },
   methods: {
     resetMessages() {
