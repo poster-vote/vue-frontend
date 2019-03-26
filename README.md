@@ -40,7 +40,7 @@ You'll only need to follow this setup once for your dev machine.
 npm install
 
 # Setup the development api server
-# -> Fill in your SENDGRID_API_KEY, see https://app.sendgrid.com/settings/api_keys
+# -> Fill in your SENDGRID_TOKEN, see https://app.sendgrid.com/settings/api_keys
 cp .env.api.example .env.api.local
 nano .env.api.local
 
