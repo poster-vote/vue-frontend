@@ -14,13 +14,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
   api:
-    image: openlab.ncl.ac.uk:4567/poster-vote/node-backend:2.0.0-beta.1
+    image: openlab.ncl.ac.uk:4567/poster-vote/node-backend:2.0.0-beta.2
     restart: unless-stopped
     ports:
       - 3000:3000
     env_file: .env.api.local
     environment:
-      NODE_ENV: development
+      LOG_LEVEL: silly
       DB_TYPE: mysql
       DB_URI: mysql://root:secret@mysql/postervote
       JWT_SECRET: super_duper_secret
@@ -29,4 +29,6 @@ services:
       ADMIN_EMAIL: postervote@openlab.ncl.ac.uk
       REG_TWILIO_NUMBER: 07880 123 456
       VOTE_TWILIO_NUMBER: 07880 654 321
+      API_URL: http://localhost:3000
+      WEB_URL: http://localhost:8080
     
