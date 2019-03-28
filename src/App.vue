@@ -20,10 +20,17 @@ export default {
       if (this.$store.state.currentUser) {
         return SplashMessageBus.$emit('message', 'Logged in')
       }
-      let { data } = await sharedClient.get('users')
-      this.$store.commit(MUTATION_CURRENT_USER, data.usr || null)
-      if (data.usr) {
-        SplashMessageBus.$emit('message', 'Logged in')
+      try {
+        let { data } = await sharedClient.get('auth/me')
+        this.$store.commit(MUTATION_CURRENT_USER, data.usr || null)
+        if (data.usr) {
+          SplashMessageBus.$emit('message', 'Logged in')
+        }
+      } catch (error) {
+        SplashMessageBus.$emit('message', {
+          type: 'danger',
+          body: `Can't connect to PosterVote, please try again later`
+        })
       }
     }
   }

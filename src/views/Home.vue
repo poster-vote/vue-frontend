@@ -81,6 +81,7 @@ import { isEmail } from '@/utils'
 import SiteNav from '@/components/SiteNav'
 import CenteredBox from '@/components/CenteredBox'
 import SiteFooter from '@/components/SiteFooter'
+import { SplashMessageBus } from '@/busses'
 
 const State = {
   input: 'input',
@@ -116,11 +117,21 @@ export default {
     async submitLogin() {
       this.state = State.working
 
-      let { meta } = await sharedClient.post('users', {
-        email: this.email
+      let { meta } = await sharedClient.get('auth/email/request', {
+        params: {
+          email: this.email,
+          mode: 'cookie'
+        }
       })
 
       this.state = meta.success ? State.sent : State.input
+
+      if (!meta.success) {
+        SplashMessageBus.$emit('message', {
+          type: 'danger',
+          body: 'Bad login, please try again'
+        })
+      }
     },
     resetForm() {
       this.state = State.input
