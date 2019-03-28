@@ -74,6 +74,7 @@ export default {
         contact: ''
       },
       options: ['', '', '', '', ''],
+      hasSubmitted: false,
       questionLength,
       optionLength
     }
@@ -103,7 +104,7 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    if (!this.hasChanges) return next()
+    if (!this.hasChanges || this.hasSubmitted) return next()
     let confirmed = confirm(
       'You have unsaved changes, are you sure you want to leave?'
     )
@@ -123,6 +124,7 @@ export default {
         this.$store.commit(MUTATION_POSTERS, [data])
         const params = { id: data.id }
         SplashMessageBus.$emit('message', 'Poster created')
+        this.hasSubmitted = true
         this.$router.push({ name: ROUTE_SHOW_POSTER, params })
       } else {
         this.state = 'input'

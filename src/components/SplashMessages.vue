@@ -57,6 +57,8 @@ export default {
     top: 1rem
     right: 1rem
     width: 320px
+  +desktop
+    width: 440px
   +mobile
     bottom: 0.5em
     left: 0.5em

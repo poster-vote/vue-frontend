@@ -80,7 +80,7 @@ export default {
     async logout() {
       const message = 'Are you sure you want to logout?'
       if (!confirm(message)) return
-      await sharedClient.delete('users')
+      await sharedClient.post('auth/logout')
       SplashMessageBus.$emit('message', 'Logged out')
       this.$store.commit(MUTATION_CURRENT_USER, null)
       this.$router.push({ name: ROUTE_HOME })
